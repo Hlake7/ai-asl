@@ -1,0 +1,41 @@
+# Worktrees
+.worktrees/
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# ML artifacts
+services/trainer/artifacts/models/*.pkl
+services/trainer/artifacts/metrics/
+data/raw/
+data/processed/
+data/interim/
+!data/raw/asl_alphabet/.gitkeep
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Superpowers
+.superpowers/
