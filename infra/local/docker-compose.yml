@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  inference-api:
+    build:
+      context: ../../services/inference-api
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount trained model artifact read-only into the container
+      - ../../services/trainer/artifacts/models:/app/artifacts/models:ro
+    environment:
+      - MODEL_PATH=artifacts/models/classifier.pkl
+      - CONFIDENCE_THRESHOLD=0.85
+    restart: unless-stopped
