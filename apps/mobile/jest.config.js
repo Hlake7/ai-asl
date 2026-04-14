@@ -1,5 +1,10 @@
 module.exports = {
   testEnvironment: 'node',
+  // Haste module system resolves platform-specific files (e.g. Platform → Platform.ios.js)
+  haste: {
+    defaultPlatform: 'ios',
+    platforms: ['android', 'ios', 'native'],
+  },
   transform: {
     '^.+\\.(ts|tsx|js|jsx)$': ['babel-jest', { presets: ['babel-preset-expo'] }],
   },
@@ -13,11 +18,16 @@ module.exports = {
   ],
   moduleNameMapper: {
     '^react-native-mediapipe$': '<rootDir>/__mocks__/react-native-mediapipe.ts',
+    '^react-native-svg$': '<rootDir>/__mocks__/react-native-svg.ts',
+    '^react-native-reanimated$': '<rootDir>/__mocks__/react-native-reanimated.ts',
   },
   testMatch: [
     '**/__tests__/**/*.{ts,tsx}',
     '**/*.{spec,test}.{ts,tsx}',
   ],
   testPathIgnorePatterns: ['node_modules'],
-  setupFiles: ['<rootDir>/jest.setup.js'],
+  setupFiles: [
+    'react-native/jest/setup.js',
+    '<rootDir>/jest.setup.js',
+  ],
 };
