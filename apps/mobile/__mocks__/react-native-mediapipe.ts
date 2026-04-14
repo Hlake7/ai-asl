@@ -1,9 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
 
-export const HandLandmarkerView = React.forwardRef(
-  (props: Record<string, unknown>, ref: React.Ref<unknown>) =>
-    React.createElement(View, { ...props, ref } as React.ComponentProps<typeof View>),
+export const HandLandmarkerView = React.forwardRef<View, React.ComponentProps<typeof View>>(
+  (props, ref) => React.createElement(View, { ...props, ref }),
 );
 HandLandmarkerView.displayName = 'HandLandmarkerView';
 
