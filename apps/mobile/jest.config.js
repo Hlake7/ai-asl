@@ -1,5 +1,8 @@
 module.exports = {
-  preset: 'jest-expo',
+  testEnvironment: 'node',
+  transform: {
+    '^.+\\.(ts|tsx)$': ['babel-jest', { presets: ['babel-preset-expo'] }],
+  },
   transformIgnorePatterns: [
     'node_modules/(?!((jest-)?react-native|@react-native(-community)?|expo(nent)?|@expo(nent)?/.*|expo-router|react-navigation|@react-navigation/.*|react-native-svg|react-native-reanimated|react-native-mediapipe|zustand|@tanstack/.*))',
   ],
@@ -10,4 +13,5 @@ module.exports = {
     '**/__tests__/**/*.{ts,tsx}',
     '**/*.{spec,test}.{ts,tsx}',
   ],
+  testPathIgnorePatterns: ['node_modules'],
 };
