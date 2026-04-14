@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "ASL Vision",
+    "slug": "asl-vision",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "aslvision",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.aslvision.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "ASL Vision uses your camera to detect hand signs."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#000000"
+      },
+      "package": "com.aslvision.app",
+      "permissions": ["android.permission.CAMERA"]
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
