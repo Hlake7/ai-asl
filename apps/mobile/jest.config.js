@@ -14,12 +14,13 @@ module.exports = {
   // We ignore node_modules that are NOT react-native ecosystem packages,
   // but never ignore .pnpm paths (so the pnpm virtual store is always transformed).
   transformIgnorePatterns: [
-    '/node_modules/(?!.pnpm)(?!((jest-)?react-native|@react-native(-community)?|expo(nent)?|@expo(nent)?/.*|expo-router|react-navigation|@react-navigation/.*|react-native-svg|react-native-reanimated|react-native-mediapipe|zustand|@tanstack/.*|@testing-library/react-native))',
+    '/node_modules/(?!.pnpm)(?!((jest-)?react-native|@react-native(-community)?|@react-native-async-storage|expo(nent)?|@expo(nent)?/.*|expo-router|react-navigation|@react-navigation/.*|react-native-svg|react-native-reanimated|react-native-mediapipe|zustand|@tanstack/.*|@testing-library/react-native))',
   ],
   moduleNameMapper: {
     '^react-native-mediapipe$': '<rootDir>/__mocks__/react-native-mediapipe.ts',
     '^react-native-svg$': '<rootDir>/__mocks__/react-native-svg.ts',
     '^react-native-reanimated$': '<rootDir>/__mocks__/react-native-reanimated.ts',
+    '^@react-native-async-storage/async-storage$': '<rootDir>/__mocks__/@react-native-async-storage/async-storage.ts',
   },
   testMatch: [
     '**/__tests__/**/*.{ts,tsx}',
