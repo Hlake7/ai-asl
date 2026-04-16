@@ -10,7 +10,7 @@ export type LessonStep =
   | { type: 'complete' };
 
 interface UseLessonSessionOptions {
-  lesson: LessonDefinition;
+  lesson: LessonDefinition | undefined;
   userName: string;
   onComplete: (lessonId: string) => void;
   onRecordLockIn: (letter: string) => void;
@@ -51,20 +51,24 @@ function buildSteps(letters: string[]): LessonStep[] {
   return steps;
 }
 
+const FALLBACK_STEPS: LessonStep[] = [{ type: 'complete' }];
+
 export function useLessonSession({
   lesson,
   userName,
   onComplete,
   onRecordLockIn,
 }: UseLessonSessionOptions): UseLessonSessionReturn {
-  const [steps] = useState(() => buildSteps(resolveLetters(lesson.letters, userName)));
+  const [steps] = useState(() =>
+    lesson ? buildSteps(resolveLetters(lesson.letters, userName)) : FALLBACK_STEPS,
+  );
   const [stepIndex, setStepIndex] = useState(0);
   // Mirrors stepIndex so advance() can read the current value without
   // including stepIndex in the useCallback dependency array.
   const stepIndexRef = useRef(0);
 
-  const lessonIdRef = useRef(lesson.id);
-  lessonIdRef.current = lesson.id;
+  const lessonIdRef = useRef(lesson?.id ?? '');
+  lessonIdRef.current = lesson?.id ?? '';
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
   const onRecordLockInRef = useRef(onRecordLockIn);

@@ -22,7 +22,7 @@ export default function LessonScreen() {
   const lesson = UNIT_1.find((l) => l.id === lessonId);
 
   const { currentStep, progress, advance } = useLessonSession({
-    lesson: lesson!,
+    lesson,
     userName: userName ?? '',
     onComplete: completeLesson,
     onRecordLockIn: recordLockIn,
