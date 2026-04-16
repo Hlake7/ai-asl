@@ -1,69 +1,97 @@
 import React from 'react';
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useAppStore } from '../../src/store/useAppStore';
+import { UNIT_1 } from '../../src/data/lessons';
 
 export default function HomeScreen() {
   const router = useRouter();
+  const { userName, completedLessons } = useAppStore();
+  const unit1Ids = new Set(UNIT_1.map((l) => l.id));
+  const completedCount = Object.keys(completedLessons).filter((id) => unit1Ids.has(id)).length;
+  const totalLessons = UNIT_1.length;
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.inner}>
-        <Text style={styles.title}>ASL Vision</Text>
-        <Text style={styles.subtitle}>Learn sign language one letter at a time</Text>
+        <View style={styles.greeting}>
+          <Text style={styles.title}>ASL Vision</Text>
+          {userName ? (
+            <Text style={styles.subtitle}>Hey {userName}!</Text>
+          ) : (
+            <Text style={styles.subtitle}>Learn sign language one letter at a time</Text>
+          )}
+        </View>
 
-        <Pressable
-          style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
-          onPress={() => router.push('/signing')}
-        >
-          <Text style={styles.buttonText}>Start Signing</Text>
-        </Pressable>
+        <View style={styles.cards}>
+          <Pressable
+            style={({ pressed }) => [styles.card, styles.cardLearn, pressed && styles.cardPressed]}
+            onPress={() => router.push('/learn')}
+          >
+            <Text style={styles.cardEmoji}>📚</Text>
+            <Text style={styles.cardTitle}>Learn</Text>
+            <Text style={styles.cardSub}>
+              Unit 1: {completedCount} / {totalLessons}
+            </Text>
+          </Pressable>
+
+          <Pressable
+            style={({ pressed }) => [styles.card, styles.cardTranslate, pressed && styles.cardPressed]}
+            onPress={() => router.push('/translate')}
+          >
+            <Text style={styles.cardEmoji}>✋</Text>
+            <Text style={styles.cardTitle}>Translate</Text>
+            <Text style={styles.cardSub}>Free practice</Text>
+          </Pressable>
+        </View>
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#111',
-  },
+  container: { flex: 1, backgroundColor: '#111' },
   inner: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 32,
-    gap: 16,
+    paddingHorizontal: 24,
+    paddingTop: 32,
+    gap: 32,
   },
+  greeting: { gap: 6 },
   title: {
     color: '#fff',
-    fontSize: 36,
+    fontSize: 32,
     fontWeight: '700',
     letterSpacing: -0.5,
   },
   subtitle: {
-    color: '#aaa',
+    color: '#888',
     fontSize: 16,
-    textAlign: 'center',
   },
-  button: {
-    marginTop: 32,
-    backgroundColor: '#4A90E2',
-    paddingVertical: 16,
-    paddingHorizontal: 48,
-    borderRadius: 32,
+  cards: {
+    flexDirection: 'row',
+    gap: 12,
   },
-  buttonPressed: {
-    opacity: 0.8,
+  card: {
+    flex: 1,
+    borderRadius: 18,
+    padding: 20,
+    gap: 8,
+    minHeight: 140,
+    justifyContent: 'flex-end',
   },
-  buttonText: {
+  cardLearn: { backgroundColor: '#1a2a3a' },
+  cardTranslate: { backgroundColor: '#1a2a1a' },
+  cardPressed: { opacity: 0.8 },
+  cardEmoji: { fontSize: 32 },
+  cardTitle: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: '700',
+  },
+  cardSub: {
+    color: '#888',
+    fontSize: 13,
   },
 });

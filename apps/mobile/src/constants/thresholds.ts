@@ -9,3 +9,6 @@ export const LOCK_RESET_MS = 600;
 
 /** Minimum ms between consecutive /predict API calls (throttle). */
 export const PREDICT_THROTTLE_MS = 100;
+
+/** How long (ms) with no lock-in before the current word is pushed to history. */
+export const WORD_BREAK_MS = 1500;
