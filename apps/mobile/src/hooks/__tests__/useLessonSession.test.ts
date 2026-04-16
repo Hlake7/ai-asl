@@ -22,7 +22,9 @@ describe('useLessonSession', () => {
   it('starts at intro step with the lesson letters', () => {
     const { result } = makeHook(FIXED);
     expect(result.current.currentStep.type).toBe('intro');
-    expect((result.current.currentStep as any).letters).toEqual(['A', 'B', 'C']);
+    const step = result.current.currentStep;
+    if (step.type !== 'intro') throw new Error('expected intro step');
+    expect(step.letters).toEqual(['A', 'B', 'C']);
   });
 
   it('advances intro → reference(A) on advance()', async () => {
@@ -72,12 +74,16 @@ describe('useLessonSession', () => {
 
   it('resolves dynamic:user-name to unique uppercase letters in order', () => {
     const { result } = makeHook(DYNAMIC, 'Anna');
-    expect((result.current.currentStep as any).letters).toEqual(['A', 'N']);
+    const step = result.current.currentStep;
+    if (step.type !== 'intro') throw new Error('expected intro step');
+    expect(step.letters).toEqual(['A', 'N']);
   });
 
   it('falls back to [A,B,C] when name has no valid letters', () => {
     const { result } = makeHook(DYNAMIC, '123');
-    expect((result.current.currentStep as any).letters).toEqual(['A', 'B', 'C']);
+    const step = result.current.currentStep;
+    if (step.type !== 'intro') throw new Error('expected intro step');
+    expect(step.letters).toEqual(['A', 'B', 'C']);
   });
 
   it('progress is 0 at start and 1 at complete', async () => {

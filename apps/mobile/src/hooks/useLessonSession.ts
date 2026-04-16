@@ -59,8 +59,12 @@ export function useLessonSession({
 }: UseLessonSessionOptions): UseLessonSessionReturn {
   const [steps] = useState(() => buildSteps(resolveLetters(lesson.letters, userName)));
   const [stepIndex, setStepIndex] = useState(0);
+  // Mirrors stepIndex so advance() can read the current value without
+  // including stepIndex in the useCallback dependency array.
   const stepIndexRef = useRef(0);
 
+  const lessonIdRef = useRef(lesson.id);
+  lessonIdRef.current = lesson.id;
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
   const onRecordLockInRef = useRef(onRecordLockIn);
@@ -75,11 +79,11 @@ export function useLessonSession({
     if (next >= steps.length) return;
     const nextStep = steps[next]!;
     if (nextStep.type === 'complete') {
-      onCompleteRef.current(lesson.id);
+      onCompleteRef.current(lessonIdRef.current);
     }
     stepIndexRef.current = next;
     setStepIndex(next);
-  }, [steps, lesson.id]);
+  }, [steps]);
 
   const totalSteps = steps.length;
   const progress = totalSteps > 1 ? stepIndex / (totalSteps - 1) : 1;
