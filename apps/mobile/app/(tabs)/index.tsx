@@ -8,7 +8,8 @@ import { UNIT_1 } from '../../src/data/lessons';
 export default function HomeScreen() {
   const router = useRouter();
   const { userName, completedLessons } = useAppStore();
-  const completedCount = Object.keys(completedLessons).length;
+  const unit1Ids = new Set(UNIT_1.map((l) => l.id));
+  const completedCount = Object.keys(completedLessons).filter((id) => unit1Ids.has(id)).length;
   const totalLessons = UNIT_1.length;
 
   return (
@@ -31,7 +32,7 @@ export default function HomeScreen() {
             <Text style={styles.cardEmoji}>📚</Text>
             <Text style={styles.cardTitle}>Learn</Text>
             <Text style={styles.cardSub}>
-              {completedCount} / {totalLessons} lessons
+              Unit 1: {completedCount} / {totalLessons}
             </Text>
           </Pressable>
 
